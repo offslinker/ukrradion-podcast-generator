@@ -1,7 +1,8 @@
 require 'nokogiri'
 require 'uri'
+require 'date'
 
-class Scraper
+class ProgramPageScraper
   def process(text)
     doc = Nokogiri::HTML(text)
     result = ScrapeResult.new
@@ -23,8 +24,7 @@ class Scraper
       podcast_item.title = item.css('div.program-item-content').css('div').css('p').first.text
       podcast_item.link = URI.join('https://ukr.radio', control_div.first['data-media-path']).to_s
       podcast_item.description = item.css('div.program-item-content').css('div').css('p').first.text
-      podcast_item.updated =
-        control_div.first['data-media-date'] + ' ' + control_div.first['data-media-time']
+      podcast_item.updated = DateTime.parse(control_div.first['data-media-date'] + ' ' + control_div.first['data-media-time']).to_time
       podcast_item
     end
   end

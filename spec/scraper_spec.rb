@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../lib/scraper'
+require_relative '../lib/program_page_scraper'
 
-RSpec.describe Scraper do
+RSpec.describe ProgramPageScraper do
   describe '#process' do
     it 'gets metadata' do
-      scraper = Scraper.new
-      # read file from fixtures
-
+      scraper = described_class.new
       text = File.read('spec/fixtures/prog604.html')
       result = scraper.process(text)
       expect(result.id).to eq(604)
@@ -17,8 +15,7 @@ RSpec.describe Scraper do
     end
 
     it 'gets podcast items' do
-      scraper = Scraper.new
-      # read file from fixtures
+      scraper = described_class.new
 
       text = File.read('spec/fixtures/prog604.html')
       result = scraper.process(text)
@@ -26,8 +23,8 @@ RSpec.describe Scraper do
       expect(result.items.first.title).to eq('Юркеш “Менуети” 2007')
       expect(result.items.first.link).to eq('https://ukr.radio/audio_slice/AIR-UR2/20211103/2979820.mp3')
       expect(result.items.first.description).to eq('Юркеш “Менуети” 2007')
-      expected_date = Time.new(2011, 11, 3, 19, 4, 3)
-      expect(result.items.first.updated.to_i).to eq(expected_date.to_i)
+      expected_date = Time.new(2021, 11, 3, 19, 4, 3)
+      expect(result.items.first.updated).to eq(expected_date)
     end
   end
 end
