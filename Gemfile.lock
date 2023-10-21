@@ -1,9 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    crack (0.4.5)
+      rexml
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    hashdiff (1.0.1)
     json (2.6.3)
     language_server-protocol (3.17.0.2)
     netrc (0.11.0)
@@ -14,6 +19,8 @@ GEM
       ast (~> 2.4.1)
       racc
     prettier_print (1.2.1)
+    prism (0.15.1)
+    public_suffix (5.0.3)
     racc (1.7.1)
     rainbow (3.1.1)
     rbi (0.0.17)
@@ -53,6 +60,10 @@ GEM
       parser (>= 3.2.1.0)
     rubocop-rspec (2.15.0)
       rubocop (~> 1.33)
+    ruby-lsp (0.12.0)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 0.15.1, < 0.16)
+      sorbet-runtime (>= 0.5.5685)
     ruby-progressbar (1.13.0)
     sorbet (0.5.10965)
       sorbet-static (= 0.5.10965)
@@ -82,6 +93,10 @@ GEM
     unparser (0.6.8)
       diff-lcs (~> 1.3)
       parser (>= 3.2.0)
+    webmock (3.18.1)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.7.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
@@ -98,9 +113,11 @@ DEPENDENCIES
   rss
   rubocop
   rubocop-rspec
+  ruby-lsp
   sorbet
   sorbet-runtime
   tapioca
+  webmock
 
 BUNDLED WITH
    2.4.19
