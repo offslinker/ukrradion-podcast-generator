@@ -1,0 +1,13 @@
+AllCops:
+  NewCops: enable
+Style/Documentation:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+# enable rspec extension
+require:
+  - rubocop-rspec
+RSpec/ExampleLength:
+  Max: 20
+RSpec/MultipleExpectations:
+  Max: 5

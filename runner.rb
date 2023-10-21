@@ -1,3 +1,4 @@
+# typed: strict
 # frozen_string_literal: true
 
 require 'rss'
@@ -16,5 +17,4 @@ rss = RSS::Maker.make('2.0') do |maker|
   end
 end
 
-binding.irb
 puts rss

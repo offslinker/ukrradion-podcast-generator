@@ -2,11 +2,14 @@
 
 source 'https://rubygems.org'
 
-gem 'rss'
 gem 'nokogiri'
+gem 'rss'
 gem 'sorbet-runtime'
 
 group :development, :test do
   gem 'rspec'
   gem 'rubocop'
+  gem 'rubocop-rspec'
+  gem 'sorbet'
+  gem 'tapioca', require: false
 end
