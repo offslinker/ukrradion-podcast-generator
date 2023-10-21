@@ -7,7 +7,6 @@ require 'nokogiri'
 class ProgramProcessor < T::Struct
   extend T::Sig
 
-  const :page_number, Integer, default: 1
   const :url, String
 
   sig { params(url: String).void }
@@ -16,17 +15,30 @@ class ProgramProcessor < T::Struct
     @url = url
   end
 
-  sig { returns(T::Boolean) }
-  def public_next_page_exists?
-    page = Net::HTTP.get(URI("#{url}&page=#{page_number}"))
-    doc = Nokogiri::HTML(page)
-    next_page_exists(doc)
+  sig { returns(ScrapeResult) }
+  def process
+    page_number = 1
+    page = read_page(page_number)
+    result = ProgramPageScraper.new.process(page)
+
+    while next_page_exists?(page)
+      page_number += 1
+      page = read_page(page_number)
+      result.items += ProgramPageScraper.new.process(page).items
+    end
+    result
   end
 
   private
 
+  sig { params(page_number: Integer).returns(Nokogiri::HTML::Document) }
+  def read_page(page_number)
+    page = Net::HTTP.get(URI("#{url}&page=#{page_number}"))
+    Nokogiri::HTML(page)
+  end
+
   sig { params(doc: Nokogiri::HTML::Document).returns(T::Boolean) }
-  def next_page_exists(doc)
+  def next_page_exists?(doc)
     found_current = false
     current = doc.css('.btn-pagination').css('li.current').first
     doc.css('.btn-pagination').css('li').each do |li|
