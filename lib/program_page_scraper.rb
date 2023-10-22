@@ -5,6 +5,8 @@ require 'nokogiri'
 require 'uri'
 require 'date'
 require 'sorbet-runtime'
+require_relative 'podcast_item'
+require_relative 'scrape_result'
 
 class ProgramPageScraper
   extend T::Sig
@@ -30,33 +32,4 @@ class ProgramPageScraper
       PodcastItem.from_css_item(item)
     end
   end
-end
-
-class PodcastItem < T::Struct
-  extend T::Sig
-
-  const :title, String
-  const :link, URI
-  const :description, String
-  const :updated, Time
-
-  sig { params(item: Nokogiri::XML::Element).returns(PodcastItem) }
-  def self.from_css_item(item)
-    control = item.css('div.program-item-controls').first.css('div')
-    PodcastItem.new(
-      title: item.css('div.program-item-content').css('div').css('p').first.text,
-      link: URI.join('https://ukr.radio', control.first['data-media-path']),
-      description: item.css('div.program-item-content').css('div').css('p').first.text,
-      updated: DateTime.parse("#{control.first['data-media-date']} #{control.first['data-media-time']}").to_time
-    )
-  end
-end
-
-class ScrapeResult < T::Struct
-  prop :id, Integer
-  prop :title, String
-  prop :link, URI
-  prop :description, String
-  prop :image, URI
-  prop :items, T::Array[PodcastItem]
 end

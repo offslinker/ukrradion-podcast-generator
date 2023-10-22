@@ -3,6 +3,7 @@
 
 require 'net/http'
 require 'nokogiri'
+require_relative 'scrape_result'
 
 class ProgramProcessor < T::Struct
   extend T::Sig
