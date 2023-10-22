@@ -23,13 +23,24 @@ class ProgramProcessor < T::Struct
       result.items += ProgramPageScraper.new.process(page).items
     end
     result
+  rescue Exception => e
+    warn "Error: #{e.message}"
+    warn e.backtrace
+    warn "Error: #{uri(page_number)}"
+    raise e
   end
 
   private
 
+  sig { params(page_number: Integer).returns(URI) }
+  def uri(page_number)
+    URI("#{url}&page=#{page_number}")
+  end
+
   sig { params(page_number: Integer).returns(Nokogiri::HTML::Document) }
   def read_page(page_number)
-    page = Net::HTTP.get(URI("#{url}&page=#{page_number}"))
+    page = Net::HTTP.get(uri(page_number))
+    # File.write("spec/fixtures/tmp/prog#{T.must(page_number)}.html", page)
     Nokogiri::HTML(page)
   end
 
