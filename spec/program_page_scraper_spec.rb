@@ -30,4 +30,18 @@ RSpec.describe ProgramPageScraper do
       expect(result.items.first.updated).to eq(expected_date)
     end
   end
+
+  it 'gets podcast items from different format' do
+    scraper = described_class.new
+
+    text = File.read('spec/fixtures/page2.html')
+    doc = Nokogiri::HTML(text)
+    result = scraper.process(doc)
+    expect(result.items.size).to eq(10)
+    expect(result.items.last.title).to eq('Alyona Alyona "Пушка" 2019 рік')
+    expect(result.items.last.link.to_s).to eq('https://ukr.radio/audio_slice/AIR-UR2/20201204/2666650.mp3')
+    expect(result.items.last.description).to eq('Alyona Alyona "Пушка" 2019 рік')
+    expected_date = Time.new(2020, 12, 4, 18, 6, 0)
+    expect(result.items.last.updated).to eq(expected_date)
+  end
 end

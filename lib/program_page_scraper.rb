@@ -18,7 +18,6 @@ class ProgramPageScraper
       title: doc.css('div.prog-preview').css('div.news-category-title').first.text,
       description: doc.css('div.prog-preview').css('div.prog-descr').first.text.strip,
       image: URI.join('https://ukr.radio', doc.css('div.prog-preview').css('img').first['src']),
-      # (doc.css('div.prog-preview').css('img').first['src']),
       link: URI.join('https://ukr.radio', doc.css('div.prog-preview').css('a').first['href']),
       items: []
     )

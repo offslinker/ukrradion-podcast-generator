@@ -4,17 +4,12 @@
 require 'net/http'
 require 'nokogiri'
 require_relative 'scrape_result'
+require_relative 'program_page_scraper'
 
 class ProgramProcessor < T::Struct
   extend T::Sig
 
   const :url, String
-
-  sig { params(url: String).void }
-  def initialize(url)
-    @page_number = 1
-    @url = url
-  end
 
   sig { returns(ScrapeResult) }
   def process
@@ -40,7 +35,7 @@ class ProgramProcessor < T::Struct
 
   sig { params(doc: Nokogiri::HTML::Document).returns(T::Boolean) }
   def next_page_exists?(doc)
-    found_current = false
+    found_current = T.let(false, T::Boolean)
     current = doc.css('.btn-pagination').css('li.current').first
     doc.css('.btn-pagination').css('li').each do |li|
       return true if found_current
