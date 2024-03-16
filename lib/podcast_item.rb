@@ -10,6 +10,7 @@ class PodcastItem < T::Struct
   const :link, URI
   const :description, String
   const :updated, Time
+  const :image, T.nilable(URI)
 
   sig { params(item: Nokogiri::XML::Element).returns(PodcastItem) }
   def self.from_css_item(item)
@@ -20,11 +21,19 @@ class PodcastItem < T::Struct
             else
               title_p.text
             end
+    image = item.css('img.program-item-image').first
+    img = if image.nil?
+      nil
+    else
+      URI.join('https://ukr.radio', image.attr('src'))
+
+    end
     PodcastItem.new(
       title: title,
       link: URI.join('https://ukr.radio', control.first['data-media-path']),
       description: title,
-      updated: DateTime.parse("#{control.first['data-media-date']} #{control.first['data-media-time']}").to_time
+      updated: DateTime.parse("#{control.first['data-media-date']} #{control.first['data-media-time']}").to_time,
+      image: img
     )
   end
 end

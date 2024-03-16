@@ -43,5 +43,6 @@ RSpec.describe ProgramPageScraper do
     expect(result.items.last.description).to eq('Alyona Alyona "Пушка" 2019 рік')
     expected_date = Time.new(2020, 12, 4, 18, 6, 0)
     expect(result.items.last.updated).to eq(expected_date)
+    expect(result.items.last.image.to_s).to eq('https://ukr.radio/images/bank/prog/size2/prog_1677012664_63f52eb89de6d.png')
   end
 end

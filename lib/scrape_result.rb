@@ -29,6 +29,7 @@ class ScrapeResult < T::Struct
           rss_item.link = item.link
           rss_item.description = item.description
           rss_item.updated = item.updated.to_s
+          rss_item.itunes_image = item.image.to_s
         end
       end
     end

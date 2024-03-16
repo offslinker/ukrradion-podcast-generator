@@ -22,13 +22,15 @@ RSpec.describe ScrapeResult do
           title: 'Item 1',
           link: URI('https://example.com/item1'),
           description: 'Item 1 Description',
-          updated: first_item_updated
+          updated: first_item_updated,
+          image: URI('https://example.com/item1.jpg')
         ),
         PodcastItem.new(
           title: 'Item 2',
           link: URI('https://example.com/item2'),
           description: 'Item 2 Description',
-          updated: last_item_updated
+          updated: last_item_updated,
+          image: URI('https://example.com/item2.jpg')
         )
       ]
     end
@@ -50,6 +52,7 @@ RSpec.describe ScrapeResult do
         expect(rss_item.link).to eq(item.link)
         expect(rss_item.description).to eq(item.description)
         expect(rss_item.pubDate).to eq(item.updated)
+        expect(rss_item.itunes_image.href).to eq(item.image.to_s)
       end
     end
   end
