@@ -20,8 +20,8 @@ shows.each_with_index do |show_uri, i|
     program_processor = ProgramProcessor.new(url: show_uri)
     result = program_processor.process
 
-    File.write("results/#{show_id}.xml", result.to_rss)
-    index_html += "<li><a href='#{show_id}.xml'>#{result.title}</a></li>"
+    File.write("results/#{show_id}.rss", result.to_rss)
+    index_html += "<li><a href='#{show_id}.rss'>#{result.title}</a></li>"
     File.write('results/index.html', index_html)
   end
 end
