@@ -8,7 +8,7 @@ require_relative 'lib/program_processor'
 shows = ShowGetter.new.list_of_shows.shuffle
 puts "Found #{shows.size} shows"
 
-Dir.mkdir('results') unless Dir.exist?('results')
+Dir.mkdir('results')
 index_html = '<html lang="ua"><head><title>Список подкастів</title></head><body><h1>Список подкастів</h1><ul>'
 shows.each_with_index do |show_uri, i|
   show_id = show_uri.query.split('=').last
