@@ -36,7 +36,7 @@ class ProgramProcessor < T::Struct
       result.items += ProgramPageScraper.new.process(page).items
     end
     result
-  rescue Exception => e
+  rescue StandardError => e
     warn "Error: #{e.message}"
     warn e.backtrace
     warn "Error: #{uri(page_number)}"

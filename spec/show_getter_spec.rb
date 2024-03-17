@@ -21,7 +21,7 @@ RSpec.describe ShowGetter do
 
       show_getter = described_class.new
       result = show_getter.get_list_of_shows
-      expect(result.size).to eq(5*158)
+      expect(result.size).to eq(5 * 158)
     end
   end
 end

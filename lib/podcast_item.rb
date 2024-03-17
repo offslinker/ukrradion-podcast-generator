@@ -23,11 +23,10 @@ class PodcastItem < T::Struct
             end
     image = item.css('img.program-item-image').first
     img = if image.nil?
-      nil
-    else
-      URI.join('https://ukr.radio', image.attr('src'))
-
-    end
+            nil
+          else
+            URI.join('https://ukr.radio', image.attr('src'))
+          end
     PodcastItem.new(
       title: title,
       link: URI.join('https://ukr.radio', control.first['data-media-path']),

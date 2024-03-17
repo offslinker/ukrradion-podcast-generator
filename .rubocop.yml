@@ -10,4 +10,8 @@ require:
 RSpec/ExampleLength:
   Max: 20
 RSpec/MultipleExpectations:
-  Max: 5
+  Max: 10
+Metrics/MethodLength:
+  Max: 20
+RSpec/MultipleMemoizedHelpers:
+  Max: 10

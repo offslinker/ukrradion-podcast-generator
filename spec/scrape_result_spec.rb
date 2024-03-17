@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # FILEPATH: /path/to/scrape_result_spec.rb
 
 require 'rspec'
@@ -6,8 +8,8 @@ require_relative '../lib/podcast_item'
 
 RSpec.describe ScrapeResult do
   describe '#to_rss' do
-    subject do
-      described_class.new(id: 10, title: title, description: description, link: link, items: items, image: image)
+    subject(:rss) do
+      described_class.new(id: 10, title: title, description: description, link: link, items: items, image: image).to_rss
     end
 
     let(:title) { 'Test Title' }
@@ -36,8 +38,6 @@ RSpec.describe ScrapeResult do
     end
 
     it 'returns an RSS::Rss object with the correct attributes' do
-      rss = subject.to_rss
-
       expect(rss).to be_a(RSS::Rss)
       expect(rss.channel.title).to eq(title)
       expect(rss.channel.description).to eq(description)
