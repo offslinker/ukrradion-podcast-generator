@@ -3,6 +3,7 @@
 
 require 'nokogiri'
 require 'net/http'
+require 'sorbet-runtime'
 
 class ShowGetter
   extend T::Sig

@@ -9,17 +9,17 @@ require_relative 'program_page_scraper'
 class ProgramProcessor < T::Struct
   extend T::Sig
 
-  const :url, String
+  const :url, URI
   const :id, T.nilable(String)
 
-  sig { params(url: T.nilable(String), id: T.nilable(String)).void }
+  sig { params(url: T.nilable(URI), id: T.nilable(String)).void }
   def initialize(url: nil, id: nil)
     if id.nil?
       raise(ArgumentError, 'Either url or id must be provided') if url.nil?
 
       @url = url
     else
-      @url = "https://ukr.radio/prog.html?id=#{id}"
+      @url = URI("https://ukr.radio/prog.html?id=#{id}")
     end
     super(url: @url, id: id)
   end
