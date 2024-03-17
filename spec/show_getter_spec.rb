@@ -7,16 +7,21 @@ require 'webmock/rspec'
 RSpec.describe ShowGetter do
   describe '#process' do
     it 'loads all pages' do
+      body = File.read('spec/fixtures/progs.html')
       stub_request(:get, 'https://ukr.radio/progs.html?channelID=1')
-        .to_return(status: 200, body: File.read('spec/fixtures/prog604.html'))
+        .to_return(status: 200, body: body)
       stub_request(:get, 'https://ukr.radio/progs.html?channelID=2')
-        .to_return(status: 200, body: File.read('spec/fixtures/page2.html'))
+        .to_return(status: 200, body: body)
       stub_request(:get, 'https://ukr.radio/progs.html?channelID=3')
-        .to_return(status: 200, body: File.read('spec/fixtures/prog604_last.html'))
+        .to_return(status: 200, body: body)
+      stub_request(:get, 'https://ukr.radio/progs.html?channelID=4')
+        .to_return(status: 200, body: body)
+      stub_request(:get, 'https://ukr.radio/progs.html?channelID=5')
+        .to_return(status: 200, body: body)
 
-      program_processor = described_class.new(url: 'https://ukr.radio/prog.html?id=604')
-      result = program_processor.process
-      expect(result.items.size).to eq(22)
+      show_getter = described_class.new
+      result = show_getter.get_list_of_shows
+      expect(result.size).to eq(5*158)
     end
   end
 end
