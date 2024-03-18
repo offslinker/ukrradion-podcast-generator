@@ -8,10 +8,12 @@ require_relative 'lib/program_processor'
 shows = ShowGetter.new.list_of_shows.shuffle
 puts "Found #{shows.size} shows"
 
-Dir.mkdir('results')
+FileUtils.mkdir_p('results')
+
 index_html = '<html lang="ua"><head><title>Список подкастів</title></head><body><h1>Список подкастів</h1><ul>'
 shows.each_with_index do |show_uri, i|
   show_id = show_uri.query.split('=').last
+  next if show_id == "560"
   puts "Processing #{show_uri} show #{i} out of #{shows.size} shows"
   if File.exist?("results/#{show_id}.rss")
     index_html += "<li><a href='#{show_id}.rss'>#{show_id}</a></li>"
